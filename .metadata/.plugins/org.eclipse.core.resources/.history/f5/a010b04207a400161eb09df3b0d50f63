@@ -1,0 +1,32 @@
+/* Author: Thomas Jeffries
+ * Test class for HTable string hash table
+ */
+package lab12;
+
+public class HTest {
+	
+	private static HTable hash;
+	
+	public static void main(String[] args) {
+		hash = new HTable();
+		
+		/*hash.insert("this");
+		hash.insert("this");
+		hash.insert("that");
+		hash.insert("that");
+		hash.insert("and");
+		hash.insert("the");
+		hash.insert("other");
+		hash.insert("thing");
+		hash.insert("lots");
+		hash.insert("of");
+		hash.insert("stuff");*/
+		
+		hash.print();
+		System.out.printf("total read: %d\n", hash.total());
+		System.out.printf("capacity: %d\n", hash.capacity());
+		System.out.printf("unique elements: %d\n", hash.uniques());
+		System.out.printf("load factor: %f\n", hash.loadFactor());
+	}
+
+}

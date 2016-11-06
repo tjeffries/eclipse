@@ -7,5 +7,6 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="PLocate"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:/Users/thomas/workspace/Project3/bin/in2.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Project3"/>
 </launchConfiguration>
