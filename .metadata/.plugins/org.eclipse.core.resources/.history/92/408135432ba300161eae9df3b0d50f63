@@ -1,0 +1,6 @@
+/* Author: Thomas Jeffries
+ * Tree node containing Line object
+ * */
+public class TNode {
+	
+}

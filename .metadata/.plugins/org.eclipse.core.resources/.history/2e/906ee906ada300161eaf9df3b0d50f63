@@ -1,0 +1,20 @@
+/* Author: Thomas Jeffries
+ * 
+ * */
+
+public class BSTree{
+	
+	TNode root;
+	
+	public BSTree(){
+		root = null;
+	}
+	
+	public void insert(Line x) {
+		if(root==null){
+			root = new TNode();
+			root.line = x;
+		} else
+			root.insert(x);
+	}
+}

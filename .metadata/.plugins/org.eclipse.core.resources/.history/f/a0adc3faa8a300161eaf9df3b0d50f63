@@ -1,0 +1,35 @@
+/* Author: Thomas Jeffries
+ * Tree node containing Line object
+ * */
+public class TNode {
+	
+	public Line line;
+	public TNode leftChild;
+	public TNode rightChild;
+	public TNode parent;
+	private static final int COUNTERCLOCKWISE = 0;
+	private static final int COLINEAR = 1;
+	private static final int CLOCKWISE = 2;
+	
+	public void insert(Line x){
+		if(x.compareTo(line) <= 0){
+			if(leftChild == null){
+				leftChild = new TNode();
+				leftChild.data = x;
+				leftChild.parent = this;
+				return;
+			}
+			leftChild.insert(x);
+		} else if(x.compareTo(data) > 0){
+			if(rightChild == null){
+				rightChild = new TNode();
+				rightChild.data = x;
+				rightChild.parent = this;
+				return;
+			} 
+			rightChild.insert(x);
+		}
+	}
+	
+	
+}

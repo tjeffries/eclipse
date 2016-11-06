@@ -1,0 +1,67 @@
+/* Author: Thomas Jeffries
+ * 
+ * */
+
+
+public class BSTree{
+	
+	TNode<Line> root;
+	
+	public BSTree(){
+		root = null;
+	}
+	
+	public void insert(Line x) {
+		if(root==null){
+			root = new TNode();
+			root.data = x;
+			root.parent = null;
+		} else
+			root.insert(x);
+	}
+
+	@Override
+	public void delete(T x) {
+		if(root == null)
+			return;
+		root.delete(x);
+	}
+
+	@Override
+	public boolean lookup(T x) {
+		if(root == null)
+			return false;
+		return root.lookup(x);
+	}
+
+	@Override
+	public void printPreOrder() {
+		if(root == null){
+			System.out.println("Tree is empty!");
+			return;
+		}
+		root.printPreOrder();
+		System.out.println();//newline pushes queued prints to console
+	}
+
+	@Override
+	public void printInOrder() {
+		if(root == null){
+			System.out.println("Tree is empty!");
+			return;
+		}
+		root.printInOrder();
+		System.out.println();//newline pushes queued prints to console
+	}
+
+	@Override
+	public void printPostOrder() {
+		if(root == null){
+			System.out.println("Tree is empty!");
+			return;
+		}
+		root.printPostOrder();
+		System.out.println();//newline pushes queued prints to console
+	}
+	
+}

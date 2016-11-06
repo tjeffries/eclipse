@@ -1,0 +1,14 @@
+/* Author: Thomas Jeffries
+ * Line object
+ * */
+public class Line {
+	
+	int x1, y1, x2, y2;
+	
+	public void line(int i1, int i2, int i3, int i4){
+		int x1 = i1;
+		int y1 = i2;
+		int x2 = i3;
+		int y2 = i4;
+	}
+}
