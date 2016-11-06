@@ -8,13 +8,18 @@ public class PLocate {
 	
 	static Line[] lines;
 	static double[] points;
-	private static final int COUNTERCLOCKWISE = 0;
-	private static final int COLINEAR = 1;
-	private static final int CLOCKWISE = 2;
+	//private static final int COUNTERCLOCKWISE = 0;
+	//private static final int COLINEAR = 1;
+	//private static final int CLOCKWISE = 2;
 	
 	public static void main(String[] args) {
 		try{
-			Scanner s = new Scanner(new FileInputStream("/home/thomas/eclipse/Project3/bin/in.txt"));
+			if(args.length != 1){
+				System.out.println("error, usage: PLocate inFile");
+				System.exit(1);
+			}
+			Scanner s = new Scanner(new FileInputStream(args[0]));
+			//Hardcode: "C:/Users/thomas/workspace/Project3/bin/in.txt"
 			
 			if(s.hasNext()){
 				int lineCnt = s.nextInt();
@@ -55,7 +60,6 @@ public class PLocate {
 			//p1 and p2 fall on opposite sides of ith line
 			if(lines[i].rel(p1x, p1y) != lines[i].rel(p2x, p2y) )
 				return false;
-			return true;
 		}
 		return true;
 	}
