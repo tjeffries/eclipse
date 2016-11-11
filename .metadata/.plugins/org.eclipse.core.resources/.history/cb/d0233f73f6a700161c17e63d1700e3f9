@@ -1,0 +1,12 @@
+package lab13;
+
+public class GTest {
+	
+	private static Graph g;
+	
+	public static void main(String[] args) {
+		g = new Graph(3, false);
+		
+		g.insert(new Edge(0,1));
+	}
+}

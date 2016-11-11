@@ -1,0 +1,18 @@
+package lab13;
+
+public class GTest {
+	
+	private static Graph g;
+	
+	public static void main(String[] args) {
+		
+		g = new Graph(3, false);
+		g.insert(new Edge(0,1));
+		g.printEdges();
+    	System.out.println();
+		
+		g = new Graph(3,true);
+		g.insert(new Edge(0,1));
+		g.printEdges();
+	}
+}

@@ -1,0 +1,56 @@
+/* Author: Thomas Jeffries
+ * This class defines a graph ADT using an adjacency matrix data structure
+ */
+package lab13;
+
+public class Graph {
+	
+    private int vertexCount, edgeCount;
+    boolean directed; // false for undirected graphs, true for directed
+    private boolean adj[][];
+    
+    public Graph(int numVerticies, boolean isDirected) {
+    	vertexCount = numVerticies;
+    	directed = isDirected;
+    	adj = new boolean[numVerticies][numVerticies];
+    	
+    	for(int i=0; i<numVerticies; i++){
+    		adj[i][0] = true;
+    		adj[0][i] = true;
+    	}
+    }
+    
+    public void insert(Edge e) {
+    	if(directed){
+    		adj[e.v][e.w] = true;
+    	} else {
+    		adj[e.v][e.w] = true;
+	    	adj[e.w][e.v] = true;
+    	}
+    }
+    
+    public void delete(Edge e) {
+    	if(!directed)
+    		adj[e.w][e.v] = false;
+    	adj[e.v][e.w] = false;
+    	
+    }
+    
+    public boolean connected(int node1, int node2) {
+    	return adj[node1][node2];
+    }
+    
+    public boolean isDirected() {
+    	return directed;
+    }
+    
+    public int vertices() { 
+    	return vertexCount;
+    }
+    
+    public int edges() {
+    	return edgeCount;
+    }
+    
+    //public AdjList getAdjList(int vertex) {
+}
