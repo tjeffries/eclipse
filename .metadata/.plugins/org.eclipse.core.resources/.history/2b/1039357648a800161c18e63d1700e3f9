@@ -52,7 +52,7 @@ public class Graph {
     	return new AdjArray(vertex);
     }
     
-    public void printEdges() {
+    public void printEdges(){
     	for(int i=0; i<adj.length; i++){
     		for(int j=0; j<adj[0].length; j++){
     			System.out.printf("%c ", (adj[i][j])? 'x' : 'o');
@@ -78,9 +78,7 @@ public class Graph {
 
     	@Override
     	public int next() {
-    		for(++i; i<verticies(); i++){
-    			
-    		}
+    		
     		return 0;
     	}
 

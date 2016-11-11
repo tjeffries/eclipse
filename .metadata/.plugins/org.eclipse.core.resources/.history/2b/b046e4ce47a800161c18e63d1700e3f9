@@ -48,46 +48,14 @@ public class Graph {
     	return edgeCount;
     }
     
-    public AdjList getAdjList(int vertex) {
-    	return new AdjArray(vertex);
-    }
+    //public AdjList getAdjList(int vertex) {
     
-    public void printEdges() {
+    public void printEdges(){
     	for(int i=0; i<adj.length; i++){
     		for(int j=0; j<adj[0].length; j++){
     			System.out.printf("%c ", (adj[i][j])? 'x' : 'o');
     		}
     		System.out.println();
     	}
-    }
-    
-    private class AdjArray implements AdjList {
-    	
-    	private int v, i;//vertex and location in array
-    	
-    	public AdjArray(int vIn){
-    		v = vIn;
-    		i = -1;
-    	}
-    	
-    	@Override
-    	public int begin() {
-    		i = -1;
-    		return next();
-    	}
-
-    	@Override
-    	public int next() {
-    		for(++i; i<verticies(); i++){
-    			
-    		}
-    		return 0;
-    	}
-
-    	@Override
-    	public boolean end() {
-    		return (i<v) ? false : true;
-    	}
-
     }
 }

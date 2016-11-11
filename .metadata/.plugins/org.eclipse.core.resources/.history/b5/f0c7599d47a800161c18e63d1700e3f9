@@ -1,0 +1,30 @@
+package lab13;
+
+public class AdjArray implements AdjList {
+	
+	private int v, i;//vertex and location in array
+	
+	public AdjArray(int vIn){
+		v = vIn;
+		i = -1;
+	}
+	
+	@Override
+	public int begin() {
+		i = -1;
+		return next();
+	}
+
+	@Override
+	public int next() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean end() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
