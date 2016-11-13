@@ -9,12 +9,12 @@ public class Graph {
     boolean directed; // false for undirected graphs, true for directed
     private boolean adj[][];
     
-    public Graph(int numVerticies, boolean isDirected) {
-    	vertexCount = numVerticies;
+    public Graph(int numVertices, boolean isDirected) {
+    	vertexCount = numVertices;
     	directed = isDirected;
-    	adj = new boolean[numVerticies][numVerticies];
+    	adj = new boolean[numVertices][numVertices];
     	
-    	for(int i=0; i<numVerticies; i++){
+    	for(int i=0; i<numVertices; i++){
     		adj[i][i] = true;
     	}
     }
@@ -55,10 +55,20 @@ public class Graph {
     public void printEdges() {
     	for(int i=0; i<adj.length; i++){
     		for(int j=0; j<adj[0].length; j++){
-    			System.out.printf("%c ", (adj[i][j])? 'x' : 'o');
+    			System.out.printf("%c ", (adj[j][i])? 'x' : 'o');
     		}
     		System.out.println();
     	}
+    }
+    
+    public void show () {
+        for (int s = 0; s < vertices(); s++) {
+            System.out.print(s + ": ");
+            AdjList A = getAdjList(s);
+            for (int t = A.begin(); !A.end(); t = A.next()) // use of iterator
+                System.out.print(t + " ");
+            System.out.println();
+        }
     }
     
     private class AdjArray implements AdjList {
@@ -78,10 +88,11 @@ public class Graph {
 
     	@Override
     	public int next() {
-    		for(++i; i<verticies(); i++){
-    			
+    		for(++i; i<vertices(); i++){
+    			if(connected(i, v))
+    				return i;
     		}
-    		return 0;
+    		return -1;
     	}
 
     	@Override
@@ -90,4 +101,5 @@ public class Graph {
     	}
 
     }
+    
 }
