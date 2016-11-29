@@ -13,7 +13,7 @@ public class Nav {
 	private static Graph g;
 	
 	public static void main(String[] args) {
-		
+		System.out.println("Program Start");
 		if(args.length < 1){
 			System.out.println("error, usage: Nav inFile");
 			System.exit(1);
@@ -29,14 +29,14 @@ public class Nav {
 			int numIntersects = 0;
 			while(s.hasNextLine()){
 				input.add(s.next());
-				//System.out.println(input.peekLast());
-				/* The following is faster but assumes all intersections declared before any roads:
+				//The following is faster but assumes all intersections declared before any roads:
 				if(numIntersects == 0 && input.peekLast().compareTo("r")==0)
-					numIntersects = input.size()/4;*/
+					numIntersects = input.size()/4;
 			}
-			for(int i=0; i<input.size(); i+=4)
+			System.out.println(numIntersects+" intersections found");
+			/*for(int i=0; i<input.size(); i+=4)
 				if(input.get(i).compareTo("i")==0)
-					numIntersects++;
+					numIntersects++;*/
 			
 			g = new Graph(numIntersects);
 			for(int i=0; i<numIntersects; i++){
@@ -66,11 +66,10 @@ public class Nav {
 	private static void display(){
 		JFrame frame = new JFrame("HelloWorldSwing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(300, 200);
 		JLabel label = new JLabel("Hello World");
 		frame.getContentPane().add(label);
 		
-		frame.setLocationRelativeTo(null);
+		
 		
 		g.drawGraph(frame);
 	}

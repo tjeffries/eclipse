@@ -5,11 +5,15 @@
 package project4;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 
 public class Graph {
 	
     private int vertexCount, edgeCount, vIndex;
-    private Vertex[] vArray;//maps vertex ID String to vertex index
+    private Vertex vArray[];//maps vertex ID String to vertex index
     private boolean adj[][];
     
     public Graph(int numVertices) {
@@ -77,7 +81,67 @@ public class Graph {
     	}
     }
     
+    private double[] maxMin(){
+    	double[] maxMin = new double[4];//minX, maxX, minY, maxY
+    	maxMin[0] = maxMin[1] = vArray[0].x;
+    	maxMin[2] = maxMin[3] = vArray[0].y;
+    	for(int i=0; i<vertexCount; i++){
+    		maxMin[0] = (maxMin[0] < vArray[i].x) ? vArray[i].x : maxMin[0];
+    		maxMin[1] = (maxMin[1] > vArray[i].x) ? vArray[i].x : maxMin[1];
+    		maxMin[2] = (maxMin[2] < vArray[i].y) ? vArray[i].y : maxMin[2];
+    		maxMin[3] = (maxMin[3] > vArray[i].y) ? vArray[i].y : maxMin[3];
+    	}
+    	return maxMin;
+    }
+    
     public void drawGraph(JFrame frame){
+    	int wWidth = 600;
+    	int wHeight = 600;
+    	int margin = 10;
+    	
+    	double[] maxMin = maxMin();
+    	System.out.printf("%f %f %f %f\n", maxMin[0], maxMin[1], maxMin[2], maxMin[3]);
+    	double scaleFactor = (maxMin[1]-maxMin[0] > maxMin[3]-maxMin[2]) ? 1/(maxMin[1]-maxMin[0]) : 1/(maxMin[3]-maxMin[2]);
+    	scaleFactor = Math.abs(scaleFactor*wWidth*.9);
+    	System.out.printf("scale factor: %f\n", scaleFactor);
+    	
+    	frame.setSize(wWidth, wHeight);
+    	frame.setLocationRelativeTo(null);
+    	
+    	DPanel draw = new DPanel();
+    	for(int i=0; i<vertexCount; i++){
+    		for(int j=0; j<vertexCount; j++){
+    			if(connected(i, j)){
+    				
+	    			DPanel.addLine(
+    					Math.abs((int)((vArray[i].y-maxMin[3])*scaleFactor))+margin,
+    					Math.abs((int)((vArray[i].x-maxMin[0])*scaleFactor))+margin,
+    					Math.abs((int)((vArray[j].y-maxMin[3])*scaleFactor))+margin,
+    					Math.abs((int)((vArray[j].x-maxMin[0])*scaleFactor))+margin );
+    			}
+    		}
+    	}
+    	
+    	
+    	frame.add(draw);
     	frame.setVisible(true);
+    }
+    
+    @SuppressWarnings("serial")
+    private static class DPanel extends JPanel{
+    	
+    	private static ArrayList<int[]> lines = new ArrayList<int[]>();
+    	public static void addLine(int x1, int y1, int x2, int y2){
+    		int[] d = {x1, y1, x2, y2};
+    		lines.add(d);
+    	}
+    	
+    	public void paintComponent(Graphics g){
+    		super.paintComponent(g);
+    		for(int i=0; i<lines.size(); i++){
+    			int[] d = lines.get(i);
+    			g.drawLine(d[0],d[1],d[2],d[3]);
+    		}
+    	}
     }
 }
