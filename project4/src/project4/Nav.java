@@ -53,8 +53,9 @@ public class Nav {
 			//g.printMatrix();
 			
 			if(args.length > 1){
-				if(args[1].compareTo("[-show]")==0 || args[2].compareTo("[-show]")==0)
+				if(args[1].compareTo("[-show]")==0 || args[2].compareTo("[-show]")==0){
 					display();
+				}
 			}
 			
 			s.close();

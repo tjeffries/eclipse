@@ -14,15 +14,17 @@ public class Graph {
 	
     private int vertexCount, edgeCount, vIndex;
     private Vertex vArray[];//maps vertex ID String to vertex index
-    private boolean adj[][];
+    private ArrayList<LinkedList<Integer>> adj;
     
     public Graph(int numVertices) {
     	vertexCount = 0;
-    	adj = new boolean[numVertices][numVertices];
+    	adj = new ArrayList<LinkedList<Integer>>(numVertices);
+    	
     	vIndex = 0;
     	vArray = new Vertex[numVertices];
     	for(int i=0; i<numVertices; i++){
-    		adj[i][i] = true;
+    		adj.add(new LinkedList<Integer>());
+    		adj.get(i).add(new Integer(i));
     	}
     }
     
@@ -44,8 +46,8 @@ public class Graph {
     	int wid = findID(e.wid);
     	if(vid == -1 || wid == -1)
     		throw new RuntimeException("one or more required vertices not found in graph");
-    	adj[findID(e.wid)][findID(e.vid)] = true;
-    	adj[findID(e.vid)][findID(e.wid)] = true;
+    	adj.get(vid).add(new Integer(wid));
+    	adj.get(wid).add(new Integer(vid));
     	edgeCount++;
     }
     
@@ -54,14 +56,14 @@ public class Graph {
     	int wid = findID(e.wid);
     	if(vid == -1 || wid == -1)
     		throw new RuntimeException("one or more required vertices not found in graph");
-    	adj[findID(e.wid)][findID(e.vid)] = false;
-    	adj[findID(e.vid)][findID(e.wid)] = false;
+    	adj.get(vid).remove(new Integer(wid));
+    	adj.get(wid).remove(new Integer(vid));
     	edgeCount--;
     	
     }
     
     public boolean connected(int node1, int node2) {
-    	return adj[node1][node2];
+    	return adj.get(node1).contains(new Integer(node2));
     }
     
     public int vertices() { 
@@ -73,10 +75,10 @@ public class Graph {
     }
     
     public void printMatrix() {
-    	for(int i=0; i<adj.length; i++){
-    		for(int j=0; j<adj[0].length; j++){
-    			System.out.printf("%c ", (adj[j][i])? 'X' : 'o');
-    		}
+    	for(int i=0; i<adj.size(); i++){
+    		System.out.printf("%d :", i);
+    		for(int j=0; j<adj.get(i).size(); j++)
+    			System.out.printf("%d, ", adj.get(i).get(j));
     		System.out.println();
     	}
     }
@@ -96,7 +98,7 @@ public class Graph {
     
     public void drawGraph(JFrame frame){
     	int wWidth = 600;
-    	int wHeight = 600;
+    	int wHeight = 700;
     	int margin = 10;
     	
     	double[] maxMin = maxMin();
