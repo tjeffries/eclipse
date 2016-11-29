@@ -1,17 +1,20 @@
+/* Author: Thomas Jeffries
+ * This is the main class for project 4, and performs io and pathfinding algorithms.
+ */
 package project4;
 
 import java.io.FileInputStream;
 import java.util.Scanner;
 import java.util.LinkedList;
+import javax.swing.*;
 
 public class Nav {
 	
+	private static Graph g;
 	
-
 	public static void main(String[] args) {
 		
-		System.out.println("program start");
-		if(args.length != 1){
+		if(args.length < 1){
 			System.out.println("error, usage: Nav inFile");
 			System.exit(1);
 		}
@@ -23,8 +26,35 @@ public class Nav {
 			
 			LinkedList<String> input = new LinkedList<String>();
 			
+			int numIntersects = 0;
 			while(s.hasNextLine()){
-				System.out.println(s.next());
+				input.add(s.next());
+				//System.out.println(input.peekLast());
+				/* The following is faster but assumes all intersections declared before any roads:
+				if(numIntersects == 0 && input.peekLast().compareTo("r")==0)
+					numIntersects = input.size()/4;*/
+			}
+			for(int i=0; i<input.size(); i+=4)
+				if(input.get(i).compareTo("i")==0)
+					numIntersects++;
+			
+			g = new Graph(numIntersects);
+			for(int i=0; i<numIntersects; i++){
+				input.pop();
+				g.insert(new Vertex(input.pop(), Double.parseDouble(input.pop()), Double.parseDouble(input.pop()) ));
+			}
+			while(!input.isEmpty()){
+				input.pop();
+				g.insert(new Edge(input.pop(), input.pop(), input.pop() ));
+			}
+			
+			System.out.println("Num vertices in graph g: "+g.vertices());
+			System.out.println("Num edges in graph g: "+g.edges());
+			//g.printMatrix();
+			
+			if(args.length > 1){
+				if(args[1].compareTo("[-show]")==0 || args[2].compareTo("[-show]")==0)
+					display();
 			}
 			
 			s.close();
@@ -32,5 +62,16 @@ public class Nav {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private static void display(){
+		JFrame frame = new JFrame("HelloWorldSwing");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(300, 200);
+		JLabel label = new JLabel("Hello World");
+		frame.getContentPane().add(label);
+		
+		frame.setLocationRelativeTo(null);
+		
+		g.drawGraph(frame);
+	}
 }
