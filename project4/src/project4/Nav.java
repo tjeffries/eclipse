@@ -43,11 +43,12 @@ public class Nav {
 				input.pop();
 				g.insert(new Vertex(input.pop(), Double.parseDouble(input.pop()), Double.parseDouble(input.pop()) ));
 			}
+			System.out.println("finished building vertex array");
 			while(!input.isEmpty()){
 				input.pop();
 				g.insert(new Edge(input.pop(), input.pop(), input.pop() ));
 			}
-			
+			System.out.println("finished building edge list");
 			System.out.println("Num vertices in graph g: "+g.vertices());
 			System.out.println("Num edges in graph g: "+g.edges());
 			//g.printMatrix();
@@ -65,7 +66,7 @@ public class Nav {
 	}
 	
 	private static void display(){
-		JFrame frame = new JFrame("HelloWorldSwing");
+		JFrame frame = new JFrame("Navigation Map");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel label = new JLabel("Hello World");
 		frame.getContentPane().add(label);

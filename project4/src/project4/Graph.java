@@ -8,18 +8,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Hashtable;
 
 
 public class Graph {
 	
     private int vertexCount, edgeCount, vIndex;
+    private Hashtable<String, Vertex> vTable;
     private Vertex vArray[];//maps vertex ID String to vertex index
     private ArrayList<LinkedList<Integer>> adj;
     
     public Graph(int numVertices) {
-    	vertexCount = 0;
+    	vertexCount = numVertices;
     	adj = new ArrayList<LinkedList<Integer>>(numVertices);
     	
+    	vTable = new Hashtable<String, Vertex>(numVertices*2);
     	vIndex = 0;
     	vArray = new Vertex[numVertices];
     	for(int i=0; i<numVertices; i++){
@@ -30,18 +33,19 @@ public class Graph {
     
     public void insert(Vertex v){
     	vArray[vIndex] = v;
+    	vTable.put(v.id, v);
     	vIndex++;
-    	vertexCount++;
     }
     
-    private int findID(String v){
-    	for(int i=0; i<vertexCount; i++)
-    		if(vArray[i].equals(v))
-    			return i;
-    	return -1;
+    private Vertex findVertex(String v){
+    	return vTable.get(v);
     }
     
-    public void insert(Edge e) throws RuntimeException {
+    public void insert(Edge e){
+    	
+    }
+    
+    /*public void insert(Edge e) {
     	int vid = findID(e.vid);
     	int wid = findID(e.wid);
     	if(vid == -1 || wid == -1)
@@ -49,7 +53,7 @@ public class Graph {
     	adj.get(vid).add(new Integer(wid));
     	adj.get(wid).add(new Integer(vid));
     	edgeCount++;
-    }
+    }*/
     
     public void delete(Edge e) throws RuntimeException {
     	int vid = findID(e.vid);
