@@ -13,28 +13,24 @@ import java.util.Hashtable;
 
 public class Graph {
 	
-    private int vertexCount, edgeCount, vIndex;
+    private int vertexCount, edgeCount;
     private Hashtable<String, Vertex> vTable;
-    private Vertex vArray[];//maps vertex ID String to vertex index
-    private ArrayList<LinkedList<Integer>> adj;
+    private Hashtable<String, LinkedList<String>> eTable;
+    private ArrayList<String> vIDs;
     
     public Graph(int numVertices) {
     	vertexCount = numVertices;
-    	adj = new ArrayList<LinkedList<Integer>>(numVertices);
-    	
     	vTable = new Hashtable<String, Vertex>(numVertices*2);
-    	vIndex = 0;
-    	vArray = new Vertex[numVertices];
-    	for(int i=0; i<numVertices; i++){
-    		adj.add(new LinkedList<Integer>());
-    		adj.get(i).add(new Integer(i));
-    	}
+    	eTable = new Hashtable<String, LinkedList<String>>(numVertices*2);
+    	vIDs = new ArrayList<String>(numVertices);
     }
     
     public void insert(Vertex v){
-    	vArray[vIndex] = v;
     	vTable.put(v.id, v);
-    	vIndex++;
+    	//instantiate and hash empty LinkedList for each new vertex
+    	LinkedList<String> tmp = new LinkedList<String>();
+    	eTable.put(v.id, tmp);
+    	vIDs.add(v.id);
     }
     
     private Vertex findVertex(String v){
@@ -42,32 +38,17 @@ public class Graph {
     }
     
     public void insert(Edge e){
-    	
-    }
-    
-    /*public void insert(Edge e) {
-    	int vid = findID(e.vid);
-    	int wid = findID(e.wid);
-    	if(vid == -1 || wid == -1)
-    		throw new RuntimeException("one or more required vertices not found in graph");
-    	adj.get(vid).add(new Integer(wid));
-    	adj.get(wid).add(new Integer(vid));
+    	eTable.get(e.vid).add(e.wid);
     	edgeCount++;
-    }*/
-    
-    public void delete(Edge e) throws RuntimeException {
-    	int vid = findID(e.vid);
-    	int wid = findID(e.wid);
-    	if(vid == -1 || wid == -1)
-    		throw new RuntimeException("one or more required vertices not found in graph");
-    	adj.get(vid).remove(new Integer(wid));
-    	adj.get(wid).remove(new Integer(vid));
-    	edgeCount--;
-    	
     }
     
-    public boolean connected(int node1, int node2) {
-    	return adj.get(node1).contains(new Integer(node2));
+    public void delete(Edge e){
+    	eTable.get(e.vid).remove(e.wid);
+    	eTable.get(e.wid).remove(e.vid);
+    }
+    
+    public boolean connected(int vid, int wid) {
+    	return (eTable.get(vid).contains(wid) || eTable.get(wid).contains(vid));
     }
     
     public int vertices() { 
@@ -78,24 +59,15 @@ public class Graph {
     	return edgeCount;
     }
     
-    public void printMatrix() {
-    	for(int i=0; i<adj.size(); i++){
-    		System.out.printf("%d :", i);
-    		for(int j=0; j<adj.get(i).size(); j++)
-    			System.out.printf("%d, ", adj.get(i).get(j));
-    		System.out.println();
-    	}
-    }
-    
     private double[] maxMin(){
     	double[] maxMin = new double[4];//minX, maxX, minY, maxY
-    	maxMin[0] = maxMin[1] = vArray[0].x;
-    	maxMin[2] = maxMin[3] = vArray[0].y;
+    	maxMin[0] = maxMin[1] = vTable.get(vIDs.get(0)).x;
+    	maxMin[2] = maxMin[3] = vTable.get(vIDs.get(0)).y;
     	for(int i=0; i<vertexCount; i++){
-    		maxMin[0] = (maxMin[0] < vArray[i].x) ? vArray[i].x : maxMin[0];
-    		maxMin[1] = (maxMin[1] > vArray[i].x) ? vArray[i].x : maxMin[1];
-    		maxMin[2] = (maxMin[2] < vArray[i].y) ? vArray[i].y : maxMin[2];
-    		maxMin[3] = (maxMin[3] > vArray[i].y) ? vArray[i].y : maxMin[3];
+    		maxMin[0] = (maxMin[0] < vTable.get(vIDs.get(i)).x) ? maxMin[0] : vTable.get(vIDs.get(i)).x;
+    		maxMin[1] = (maxMin[1] > vTable.get(vIDs.get(i)).x) ? maxMin[1] : vTable.get(vIDs.get(i)).x;
+    		maxMin[2] = (maxMin[2] < vTable.get(vIDs.get(i)).y) ? maxMin[2] : vTable.get(vIDs.get(i)).y;
+    		maxMin[3] = (maxMin[3] > vTable.get(vIDs.get(i)).y) ? maxMin[3] : vTable.get(vIDs.get(i)).y;
     	}
     	return maxMin;
     }
@@ -115,16 +87,14 @@ public class Graph {
     	frame.setLocationRelativeTo(null);
     	
     	DPanel draw = new DPanel();
-    	for(int i=0; i<vertexCount; i++){
-    		for(int j=0; j<vertexCount; j++){
-    			if(connected(i, j)){
-    				
-	    			DPanel.addLine(
-    					Math.abs((int)((vArray[i].y-maxMin[3])*scaleFactor))+margin,
-    					Math.abs((int)((vArray[i].x-maxMin[0])*scaleFactor))+margin,
-    					Math.abs((int)((vArray[j].y-maxMin[3])*scaleFactor))+margin,
-    					Math.abs((int)((vArray[j].x-maxMin[0])*scaleFactor))+margin );
-    			}
+    	for(int i=0; i<vertices(); i++){
+    		LinkedList<String> eList = eTable.get(vIDs.get(i));
+    		Vertex v = vTable.get(vIDs.get(i));
+    		for(int j=0; j<eList.size(); j++){
+    			draw.addLine(	Math.abs((int)((v.x-maxMin[0])*scaleFactor))+margin,
+    							Math.abs((int)((v.y-maxMin[3])*scaleFactor))+margin,
+    							Math.abs((int)((vTable.get(eList.get(j)).x-maxMin[0])*scaleFactor))+margin,
+    							Math.abs((int)((vTable.get(eList.get(j)).y-maxMin[3])*scaleFactor))+margin );
     		}
     	}
     	
