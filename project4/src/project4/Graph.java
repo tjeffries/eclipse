@@ -33,10 +33,6 @@ public class Graph {
     	vIDs.add(v.id);
     }
     
-    private Vertex findVertex(String v){
-    	return vTable.get(v);
-    }
-    
     public void insert(Edge e){
     	eTable.get(e.vid).add(e.wid);
     	edgeCount++;
@@ -72,33 +68,36 @@ public class Graph {
     	return maxMin;
     }
     
-    public void drawGraph(JFrame frame){
-    	int wWidth = 600;
-    	int wHeight = 700;
-    	int margin = 10;
+    @SuppressWarnings("static-access")
+	public void drawGraph(JFrame frame){
+    	int margin = 3;
+    	int windowSize = 600;
     	
     	double[] maxMin = maxMin();
     	System.out.printf("%f %f %f %f\n", maxMin[0], maxMin[1], maxMin[2], maxMin[3]);
+    	double xSF = Math.abs(maxMin[1] - maxMin[0]);
+    	double ySF = Math.abs(maxMin[3] - maxMin[2]);
     	double scaleFactor = (maxMin[1]-maxMin[0] > maxMin[3]-maxMin[2]) ? 1/(maxMin[1]-maxMin[0]) : 1/(maxMin[3]-maxMin[2]);
-    	scaleFactor = Math.abs(scaleFactor*wWidth*.9);
-    	System.out.printf("scale factor: %f\n", scaleFactor);
+    
+    	System.out.printf("scale factor: %f, x/y scale factor: %f\n", scaleFactor, ySF/xSF);
     	
-    	frame.setSize(wWidth, wHeight);
-    	frame.setLocationRelativeTo(null);
+    	frame.setSize((int)Math.ceil(windowSize*(ySF/xSF)+margin*2), (int)Math.ceil(1.35*(windowSize+margin*2)));
+    	
+    	scaleFactor = (xSF>ySF) ? Math.abs(scaleFactor*frame.getBounds().height) : Math.abs(scaleFactor*frame.getBounds().width);
     	
     	DPanel draw = new DPanel();
     	for(int i=0; i<vertices(); i++){
     		LinkedList<String> eList = eTable.get(vIDs.get(i));
     		Vertex v = vTable.get(vIDs.get(i));
     		for(int j=0; j<eList.size(); j++){
-    			draw.addLine(	Math.abs((int)((v.x-maxMin[0])*scaleFactor))+margin,
-    							Math.abs((int)((v.y-maxMin[3])*scaleFactor))+margin,
-    							Math.abs((int)((vTable.get(eList.get(j)).x-maxMin[0])*scaleFactor))+margin,
-    							Math.abs((int)((vTable.get(eList.get(j)).y-maxMin[3])*scaleFactor))+margin );
+    			draw.addLine(	Math.abs((int)((v.y-maxMin[2])*scaleFactor))+margin,
+    							Math.abs((int)((v.x-maxMin[1])*scaleFactor*1.3))+margin,
+    							Math.abs((int)((vTable.get(eList.get(j)).y-maxMin[2])*scaleFactor))+margin,
+    							Math.abs((int)((vTable.get(eList.get(j)).x-maxMin[1])*scaleFactor*1.3))+margin );
     		}
     	}
     	
-    	
+    	frame.setLocationRelativeTo(null);
     	frame.add(draw);
     	frame.setVisible(true);
     }
