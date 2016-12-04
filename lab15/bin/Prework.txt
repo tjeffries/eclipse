@@ -1,0 +1,6 @@
+Thomas Jeffries
+CSC172 lab 15
+
+The problem of making change is solved by the relatively simple recursive backtracking algorithm. This algorithm works by recursing once for each coin value, subtracting that chosen coin value 
+from the passed-in total, and then recalling itself on the difference. it must also keep track of the number of times it has recursed and the coin values used, both of which can effectively be 
+done using an array, also passed into the recursion method. A helper method will be required to declare and pass in the int array.
