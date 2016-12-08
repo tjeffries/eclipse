@@ -47,8 +47,12 @@ public class Main {
 		if(ind0 == m0.length)
 			return;
 		
+		//regardless of whether match found, test next char in m0
+		c1(m0, m1, ind0+1, ind1, hs);
+		
 		System.out.println(ind0);
 		System.out.println(ind1);
+		System.out.println("------");
 		
 		//match found for current chars in m0 and m1
 		if(m0[ind0] == m1[ind1]){
@@ -56,13 +60,11 @@ public class Main {
 			char[] tmp1 = m1;
 			tmp0[ind0] = '0';
 			tmp1[ind1] = '0';
-			//System.out.println(tmp0);
-			//System.out.println(tmp1);
+			System.out.println("  "+ind0);
+			System.out.println("  "+ind1);
+			System.out.println("--------");
 			c1(tmp0, tmp1, ind0+1, ind1+1, hs);
 		}
-		
-		//regardless of whether match found, test next char in m0
-		c1(m0, m1, ind0+1, ind1, hs);
 	}
 	
 	/*private static void c2(char[] m0, char[] m1, int index, HashSet<String> hs){
