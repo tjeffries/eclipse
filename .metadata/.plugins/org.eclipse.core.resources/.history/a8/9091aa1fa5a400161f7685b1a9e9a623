@@ -1,8 +1,0 @@
-Author: Thomas Jeffries
-tjeffri2@u.rochester.edu
-
-(no console complile printout in Eclipse)
-
-console output from PLocate.java:
-
-> java PLocate Project3/bin/in2.txt (line and point set supplied in instructions)

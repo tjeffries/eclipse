@@ -66,7 +66,7 @@ public class Nav {
 	}
 	
 	private static void display(){
-		JFrame frame = new JFrame("Navigation Map");
+		JFrame frame = new JFrame("Map");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel label = new JLabel("Hello World");
 		frame.getContentPane().add(label);

@@ -81,9 +81,9 @@ public class Graph {
     
     	System.out.printf("scale factor: %f, x/y scale factor: %f\n", scaleFactor, ySF/xSF);
     	
-    	frame.setSize((int)Math.ceil(windowSize*(ySF/xSF)+margin*2), (int)Math.ceil(1.35*(windowSize+margin*2)));
+    	frame.setSize((int)Math.ceil(windowSize*(ySF/xSF)+margin*2), (int)Math.ceil(1.36*(windowSize+margin*2)));
     	
-    	scaleFactor = (xSF>ySF) ? Math.abs(scaleFactor*frame.getBounds().height) : Math.abs(scaleFactor*frame.getBounds().width);
+    	scaleFactor = (xSF>ySF) ? Math.abs(.98*scaleFactor*frame.getBounds().height) : Math.abs(.96*scaleFactor*frame.getBounds().width);
     	
     	DPanel draw = new DPanel();
     	for(int i=0; i<vertices(); i++){
