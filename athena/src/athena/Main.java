@@ -12,7 +12,8 @@ import java.util.Iterator;
 public class Main {
 	
 	public static void main(String[] args) {
-		System.out.println("program start: "+args.length);
+		long startTime = System.nanoTime();//timing runtime
+		//System.out.println("program start: "+args.length);
 		if(args.length < 3){
 			System.out.println("incorrect arguments. usage: Main originalMessage hiddenMessage1 hiddenMessage2");
 			System.exit(1);
@@ -26,24 +27,32 @@ public class Main {
 		System.out.println("hidden message 2: ".concat(String.valueOf(m2)));
 		
 		int uniques = combinations(m0, m1, m2);
-		System.out.println(uniques);
+		
+		
+		long endTime = System.nanoTime();//end runtime
+		long duration = (endTime - startTime);
+		
+		System.out.printf("runtime (milliseconds): %d\n", duration/1000000);
+		System.out.printf("total unique deletion paths: %d\n", uniques);
 	}
 	
 	//for three message input
 	private static int combinations(char[] m0, char[] m1, char[] m2){
 		HashSet<String> hs = new HashSet<String>();
 		HashSet<String> hs1 = new HashSet<String>();
+		HashSet<String> hsf = new HashSet<String>();
 		c1(m0, m1, 0, 0, hs);
 		
 		int count = 0;
 		Iterator<String> iter = hs.iterator();
-		System.out.println(iter.hasNext());
 		while(iter.hasNext()){
 			hs1.clear();
 			c1(iter.next().toCharArray(), m2, 0, 0, hs1);
-			count += hs1.size();
+			Iterator<String> iter1 = hs1.iterator();
+			while(iter1.hasNext())
+				hsf.add(iter1.next());
 		}
-		return count;
+		return hsf.size();
 	}
 	
 	//for two message input
@@ -53,6 +62,7 @@ public class Main {
 		return hs.size();
 	}
 	
+	//recursive function
 	private static void c1(char[] m0, char[] m1, int ind0, int ind1, HashSet<String> hs){
 		//reached end of m1 array (all chars in hidden message found)
 		if(ind1 == m1.length){
@@ -61,14 +71,14 @@ public class Main {
 			hs.add(tmp);
 			return;
 		}
-		if(ind0 == m0.length)
+		//return if reached end of m0, or if more untested characters remaining in m1 than m0 (no path possible)
+		if(ind0 == m0.length || m1.length-ind1 > m0.length-ind0)
 			return;
 		
 		//match found for current chars in m0 and m1
 		if(m0[ind0] == m1[ind1]){
 			char[] tmp0 = new char[m0.length];
 			char[] tmp1 = new char[m1.length];
-			//java arrays by reference not value...may have briefly forgotten that...
 			System.arraycopy(m0, 0, tmp0, 0, m0.length);
 			System.arraycopy(m1, 0, tmp1, 0, m1.length);
 			tmp0[ind0] = '0';
@@ -81,3 +91,33 @@ public class Main {
 		c1(m0, m1, ind0+1, ind1, hs);
 	}
 }
+
+//obsolete code from c1 (did not reduce runtime)
+/*
+//count numbers of characters ahead
+int dot0, dot1, dash0, dash1, space0, space1;
+dot0 = dot1 = dash0 = dash1 = space0 = space1 = 0;
+int i0 = ind0;
+int i1 = ind1;
+while(i0 < m0.length){
+	if(m0[i0]=='*')
+		dot0++;
+	else if(m0[i0]=='-')
+		dash0++;
+	else
+		space0++;
+	i0++;
+}
+while(i1 < m1.length){
+	if(m1[i1]=='*')
+		dot1++;
+	else if(m1[i1]=='-')
+		dash1++;
+	else
+		space1++;
+	i1++;
+}
+//look ahead and see if path is possible given number of characters
+if(dot0 < dot1 || dash0 < dash1 || space0 < space1)
+	return;
+*/
