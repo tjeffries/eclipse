@@ -38,12 +38,11 @@ public class Main {
 	
 	//for three message input
 	private static int combinations(char[] m0, char[] m1, char[] m2){
-		HashSet<String> hs = new HashSet<String>();
-		HashSet<String> hs1 = new HashSet<String>();
-		HashSet<String> hsf = new HashSet<String>();
+		HashSet<String> hs = new HashSet<String>(2048);
+		HashSet<String> hs1 = new HashSet<String>(2048);
+		HashSet<String> hsf = new HashSet<String>(2048);
 		c1(m0, m1, 0, 0, hs);
 		
-		int count = 0;
 		Iterator<String> iter = hs.iterator();
 		while(iter.hasNext()){
 			hs1.clear();
@@ -91,33 +90,3 @@ public class Main {
 		c1(m0, m1, ind0+1, ind1, hs);
 	}
 }
-
-//obsolete code from c1 (did not reduce runtime)
-/*
-//count numbers of characters ahead
-int dot0, dot1, dash0, dash1, space0, space1;
-dot0 = dot1 = dash0 = dash1 = space0 = space1 = 0;
-int i0 = ind0;
-int i1 = ind1;
-while(i0 < m0.length){
-	if(m0[i0]=='*')
-		dot0++;
-	else if(m0[i0]=='-')
-		dash0++;
-	else
-		space0++;
-	i0++;
-}
-while(i1 < m1.length){
-	if(m1[i1]=='*')
-		dot1++;
-	else if(m1[i1]=='-')
-		dash1++;
-	else
-		space1++;
-	i1++;
-}
-//look ahead and see if path is possible given number of characters
-if(dot0 < dot1 || dash0 < dash1 || space0 < space1)
-	return;
-*/
