@@ -1,0 +1,13 @@
+Author: Thomas Jeffries
+lab 16
+
+
+thomas@SKINNY:.../lab16$ ./llist once upon a time thomas
+Arguments: once upon a time
+hello thomas
+
+Functions:
+compare:bcd & bcda: -1
+concat: this that and the other thing
+copy: the end
+Squares: 0 1 4 9 16 25 36 49 64 81 100 121 144 169 196 225
