@@ -1,5 +1,5 @@
 /* Author: Thomas Jeffries
- * Solution for athenahealth first round coding challenge.
+ * Solution for athenahealth first round coding challenge, improved with dynamic optimization.
  * This class encapsulates both io and algorithms.
  * I have attempted to include comments wherever necessary for clarity.
  * */
@@ -9,15 +9,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 
-public class Mainold2 {
+public class MainDynamic {
 	
-	private static HashSet<String> attempted;//set of all attempted combinations of m0 and m1
-	private static long rCount;
+	private static HashSet<String> attempted;//set of all attempted deletion paths
+	private static long rCount;//recursion call counter
 	
 	public static void main(String[] args) {
 		long startTime = System.nanoTime();//timing runtime
 		rCount = 0;
-		attempted = new HashSet<String>(512);
+		attempted = new HashSet<String>(2048);
 		
 		//System.out.println("program start: "+args.length);
 		if(args.length < 3){
@@ -50,7 +50,7 @@ public class Mainold2 {
 		HashSet<String> hs1 = new HashSet<String>();
 		HashSet<String> hsf = new HashSet<String>();
 		c1(m0, m1, 0, 0, hs);
-		
+		//iterate through deletion paths found for message minus hidden message 1
 		Iterator<String> iter = hs.iterator();
 		while(iter.hasNext()){
 			attempted.clear();

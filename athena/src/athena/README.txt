@@ -1,4 +1,4 @@
-Author: Thomas Jeffries
+Author:Thomas Jeffries
 athenahealth "hidden message" coding challenge
 12/10/2016
 
@@ -13,5 +13,17 @@ java Main -_****_*___***_-_*-_*-*___*--_*-_*-*_***___***_*-_--*_*- -*--_---_-**_
 >original message: -_****_*___***_-_*-_*-*___*--_*-_*-*_***___***_*-_--*_*-
 >hidden message 1: -*--_---_-**_*-
 >hidden message 2: *-**_*_**_*-
->runtime (milliseconds): 16232
+>runtime (milliseconds): 5606
 >total unique deletion paths: 11474
+
+
+Long strings for runtime test
+Message: "this morse message from thomas":
+-_****_**_***___--_---_*-*_***_*___--_*_***_***_*-_--*_*___**-*_*-*_---_--___-_****_---_--_*-_***
+hidden message 1: "sequence"
+***_*_--*-_**-_*_-*_-*-*_*
+hidden_message 2: "another"
+*-_-*_---_-_****_*_*-*
+
+Number of recursive calls in non-dynamic solution: 163821866
+Number of recursive calls in dynamic solution: 6017153
