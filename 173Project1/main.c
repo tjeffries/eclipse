@@ -1,9 +1,10 @@
 /*
- * hw.c
+ * main.c
  *
- *  Created on: Jan 19, 2017
- *      Author: thomas
+ *  Created on: Feb 6, 2017
+ *      Author: thomas jeffries
  */
+
 
 #include <stdio.h>
 

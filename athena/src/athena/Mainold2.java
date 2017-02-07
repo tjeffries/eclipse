@@ -1,5 +1,5 @@
 /* Author: Thomas Jeffries
- * Solution for athenahealth first round coding challenge.
+ * Solution for athenahealth first round coding challenge, improved with dynamic optimization.
  * This class encapsulates both io and algorithms.
  * I have attempted to include comments wherever necessary for clarity.
  * */
@@ -11,15 +11,14 @@ import java.util.Iterator;
 
 public class Mainold2 {
 	
-	private static HashSet<String> attempted;//set of all attempted combinations of m0 and m1
-	private static long rCount;
+	private static HashSet<String> attempted;//set of all attempted deletion paths
+	//private static long rCount;//recursion call counter
 	
 	public static void main(String[] args) {
 		long startTime = System.nanoTime();//timing runtime
-		rCount = 0;
-		attempted = new HashSet<String>(512);
+		//rCount = 0;
+		attempted = new HashSet<String>(4096);
 		
-		//System.out.println("program start: "+args.length);
 		if(args.length < 3){
 			System.out.println("incorrect arguments. usage: Main originalMessage hiddenMessage1 hiddenMessage2");
 			System.exit(1);
@@ -28,9 +27,9 @@ public class Mainold2 {
 		char[] m0 = args[0].toCharArray();
 		char[] m1 = args[1].toCharArray();
 		char[] m2 = args[2].toCharArray();
-		System.out.println("original message: ".concat(String.valueOf(m0)));
-		System.out.println("hidden message 1: ".concat(String.valueOf(m1)));
-		System.out.println("hidden message 2: ".concat(String.valueOf(m2)));
+		//System.out.println("original message: ".concat(String.valueOf(m0)));
+		//System.out.println("hidden message 1: ".concat(String.valueOf(m1)));
+		//System.out.println("hidden message 2: ".concat(String.valueOf(m2)));
 		
 		int uniques = combinations(m0, m1, m2);
 		//int uniques = combinations(m0, m1);
@@ -39,7 +38,7 @@ public class Mainold2 {
 		long endTime = System.nanoTime();//end runtime
 		long duration = (endTime - startTime);
 		
-		System.out.printf("recursion count: %d\n", rCount);
+		//System.out.printf("recursion count: %d\n", rCount);
 		System.out.printf("runtime (milliseconds): %d\n", duration/1000000);
 		System.out.printf("total unique deletion paths: %d\n", uniques);
 	}
@@ -50,7 +49,7 @@ public class Mainold2 {
 		HashSet<String> hs1 = new HashSet<String>();
 		HashSet<String> hsf = new HashSet<String>();
 		c1(m0, m1, 0, 0, hs);
-		
+		//iterate through deletion paths found for message minus hidden message 1
 		Iterator<String> iter = hs.iterator();
 		while(iter.hasNext()){
 			attempted.clear();
@@ -63,6 +62,7 @@ public class Mainold2 {
 		return hsf.size();
 	}
 	
+	@SuppressWarnings("unused")
 	//for two message input
 	private static int combinations(char[] m0, char[] m1){
 		HashSet<String> hs = new HashSet<String>(128);
@@ -73,7 +73,7 @@ public class Mainold2 {
 	//recursive function
 	private static void c1(char[] m0, char[] m1, int ind0, int ind1, HashSet<String> hs){
 		//for tracking recursion count
-		rCount++;
+		//rCount++;
 		
 		//reached end of m1 array (all chars in hidden message found)
 		if(ind1 == m1.length){
@@ -86,11 +86,8 @@ public class Mainold2 {
 		if(ind0 == m0.length || m1.length-ind1 > m0.length-ind0)
 			return;
 		
-		//System.out.println(new String(m0).substring(0, ind0).replace("0", "").concat("  ").concat(new String(m1)));
-		if(!attempted.add(new String(m0).substring(0, ind0).replace("0", "").concat(new String(m1)))){
-			//System.out.println("ALREADY ATTEMPTED");
+		if(!attempted.add(new String(m0).substring(0, ind0).replace("0", "").concat(new String(m1))))
 			return;
-		}
 		
 		//match found for current chars in m0 and m1
 		if(m0[ind0] == m1[ind1]){

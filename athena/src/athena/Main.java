@@ -54,6 +54,7 @@ public class Main {
 		return hsf.size();
 	}
 	
+	@SuppressWarnings("unused")
 	//for two message input
 	private static int combinations(char[] m0, char[] m1){
 		HashSet<String> hs = new HashSet<String>(128);
