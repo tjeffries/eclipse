@@ -9,7 +9,7 @@
 #
 
 CC = gcc
-CFLAGS = -O -Wall -m32
+CFLAGS = -O -Wall -m64
 LIBS =
 
 all: tests

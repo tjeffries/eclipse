@@ -8,7 +8,7 @@
  * Header file for bits.c.
  */
 
-int evenBits(void);
+int evenBits(int x);
 int bitAnd(int x, int y);
 int swapBytes(int x);
 int rotateLeft(int x, int n);

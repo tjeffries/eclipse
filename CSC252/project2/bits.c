@@ -38,8 +38,10 @@
  * evenBits: Return the word with all even-numbered bits set to 1.
  *   Legal ops: ! ~ & ^ | + << >>
  */
-int evenBits(void) {
-    return 0;
+int evenBits(int x) {
+	int a = 0x55;//binary 0101 0101
+	int b = a | a<<8 | a<<16 | a<<24;
+    return x & b;
 }
 
 /*
@@ -48,7 +50,7 @@ int evenBits(void) {
  *   Legal ops: ~ |
  */
 int bitAnd(int x, int y) {
-    return 0;
+    return ~((~x) | (~y));
 }
 
 /*
@@ -57,7 +59,13 @@ int bitAnd(int x, int y) {
  *   Legal ops: ! ~ & ^ | + << >>
  */
 int swapBytes(int x) {
-    return 0;
+	int a = x&(0xFF << 16);
+	a = a >> 16;
+	int b = x&0xFF;
+	b = b << 16;
+	int c = x&(((0xFF<<16) | 0xFF) << 8);
+	
+    return a|b|c;
 }
 
 /*
