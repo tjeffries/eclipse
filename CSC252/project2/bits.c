@@ -2,7 +2,7 @@
  * Assignment: Bit Twiddling
  * Class: CSC 252 Spring 2017
  *
- * Name: <Insert Your Name Here>
+ * Name: Thomas Jeffries
  * Partner's Name: <Insert Partner's Name Here, or leave as is if you have no partner>
  *
  * TAs: Sayak Chakraborti (schakr11@cs.rochester.edu)
@@ -38,10 +38,10 @@
  * evenBits: Return the word with all even-numbered bits set to 1.
  *   Legal ops: ! ~ & ^ | + << >>
  */
-int evenBits(int x) {
+int evenBits(void) {
 	int a = 0x55;//binary 0101 0101
 	int b = a | a<<8 | a<<16 | a<<24;
-    return x & b;
+    return b;
 }
 
 /*
@@ -74,7 +74,15 @@ int swapBytes(int x) {
  *   Legal ops: ~ & ^ | + << >>
  */
 int rotateLeft(int x, int n) {
-    return 0;
+	int a = 0xFF<<24 | 0xFF<<16 | 0xFF<<8 | 0xFF;//a = 0xFFFFFFFF
+	int b = a<<(32-n);
+	
+	int spillover = x & b;
+	spillover = spillover>>(32-n);
+	
+	x = x<<n;
+	
+    return x|spillover;
 }
 
 /*
@@ -84,7 +92,21 @@ int rotateLeft(int x, int n) {
  *   Legal ops: ! ~ & ^ | + << >>
  */
 int addOver(int x, int y) {
-    return 0;
+	/*
+	//mask & with 0x01 to capture 0th bit of each
+	//right shift one
+	//add x+y, add right shifted sum of captures 0th bits
+	int x0 = x&0x01;
+	int y0 = y&0x01;
+	
+	int a = (x0+y0)>>1;//0x01 if 0th bits both 1
+	int b = (x>>1)+(y>>1);
+	
+	int c = b+a;
+	*/
+	
+	//printf("x0 %x, y0 %x, a %x, b %x, c %x\n", x0, y0, a, b, c);
+    return (((x+y)&(0x01<<31))>>31)&0x01;
 }
 
 /*
@@ -96,6 +118,9 @@ int addOver(int x, int y) {
  *   Legal ops: ! ~ & ^ | + << >>
  */
 int boundedMult(int x) {
+	//capture sign bit
+	int sign = (x&(0x01<<31)>>31)&0x01;
+	
     return 0;
 }
 

@@ -1,0 +1,38 @@
+Author: Thomas Jeffries
+tjeffri2@u.rochester.edu
+
+(no console complile printout in Eclipse)
+
+console output from HTest.java:
+
+- NOTE: Since we no longer use the Weiss book, I did not have access to the matrix named therein.
+
+> java GTest
+
+[visual representation of adjacency matrix]
+x x x x o 
+o o x o o 
+o o o o o 
+o o o o x 
+o o o o o 
+
+[output of show() method]
+0: 
+1: 0 
+2: 0 1 
+3: 0 
+4: 3 
+
+[visual of directed adjacency matrix]
+x x o o o 
+o x o o o 
+x x x o o 
+x o o x o 
+o o o x x 
+
+[output of show() method on directed graph]
+0: 
+1: 
+2: 0 1 
+3: 0 
+4: 3
